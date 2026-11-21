@@ -1,0 +1,24 @@
+package: klxm_hub
+version: '0.1.0'
+author: 'KLXM Crossmedia GmbH, Thomas Skerbis'
+supportpage: https://github.com/KLXM-Studio/redaxo5-klxm-hub
+
+page:
+    title: 'translate:klxm_hub_title'
+    perm: admin
+    icon: rex-icon fa-sign-in
+    subpages:
+        settings: { title: 'translate:klxm_hub_page_settings' }
+        accounts: { title: 'translate:klxm_hub_page_accounts' }
+
+requires:
+    redaxo: '^5.17.0'
+    php:
+        version: '>=8.3'
+        extensions: [sodium, openssl, json, dom, mbstring]
+    packages:
+        users: '^2.7'
+
+console_commands:
+    klxm_hub:logo: Klxm\Hub\Console\LogoCommand
+    klxm_hub:selftest: Klxm\Hub\Console\SelftestCommand

@@ -1,0 +1,102 @@
+/* Agentur Hub – nur eigene Klassen (klxm-hub-…), keine Stile des Cores überschrieben; Farben aus der Textfarbe (hell/dunkel). */
+
+/* Anmeldeseite: dezenter Agentur-Link unter dem Formular (Passkey und Passwort bleiben vorn) */
+.klxm-hub-login {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    text-align: center;
+}
+
+.klxm-hub-login .klxm-hub-login-link {   /* zwei eigene Klassen: gleiche Farbe auch im dunklen Backend-Thema */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 44px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    color: inherit;   /* Textfarbe des Login-Kastens – bleibt auf hellem wie dunklem Grund lesbar */
+    font-size: 0.9em;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+
+.klxm-hub-login .klxm-hub-login-link:hover,
+.klxm-hub-login .klxm-hub-login-link:focus,
+.klxm-hub-login .klxm-hub-login-link:focus-visible {
+    color: inherit;
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+}
+
+.klxm-hub-login .klxm-hub-login-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.klxm-hub-login-logo {
+    width: 1.35em;
+    height: 1.35em;
+    flex: none;
+}
+
+.klxm-hub-login-note {
+    margin: 4px 0 0;
+    color: inherit;
+    opacity: 0.85;   /* bleibt über 4,5:1 auf hellem wie dunklem Login-Kasten */
+    font-size: 0.8em;
+}
+
+/* Einstellungen */
+.klxm-hub-label {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.klxm-hub-map {
+    margin: 0 0 8px;
+}
+
+.klxm-hub-map label {
+    font-weight: 400;
+}
+
+select.klxm-hub-role {
+    display: inline-block;
+    width: auto;
+    min-width: 14em;
+}
+
+.klxm-hub-keys,
+.klxm-hub-url,
+.klxm-hub-json {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.klxm-hub-url {
+    overflow-wrap: anywhere;
+    user-select: all;
+    white-space: normal;
+}
+
+.klxm-hub-addresses th {
+    width: 12em;
+    white-space: nowrap;
+}
+
+.klxm-hub-json {
+    max-height: 28em;
+    overflow: auto;
+    font-size: 0.85em;
+}
+
+/* Agentur-Konten */
+.klxm-hub-muted {
+    opacity: 0.75;
+}
+
+.klxm-hub-state[data-state="locked"] {
+    font-weight: 700;
+}
