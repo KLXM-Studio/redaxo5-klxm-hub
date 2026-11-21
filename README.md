@@ -35,7 +35,7 @@ activate it under AddOns (or `php redaxo/bin/console package:install klxm_hub`).
    address are derived from it; if it is missing the addon warns (the addresses would depend on the request host).
 2. **In REDAXO:** AddOns → Agentur Hub → Settings → Monitoring: enter the hub's public key (`ed25519:…`, in the hub
    under Settings → Agentur Hub), “Allow signed status requests” → Save. For sign-in enter the issuer (e.g.
-   `https://hub.klxm.de/hub`) and save – without switching it on yet.
+   `https://hub.example.org/hub`) and save – without switching it on yet.
 3. **In the hub:** Manage → Register instance → website address → **“Detect addresses”** (reads the self-description)
    → “Apply addresses” → register. Without self-description enter the addresses manually (choose system “REDAXO 6” –
    the addresses are the same):

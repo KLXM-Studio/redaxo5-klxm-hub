@@ -37,7 +37,7 @@ AddOns → Agentur Hub → installieren und aktivieren (oder `php redaxo/bin/con
    entstehen Redirect-URI und Status-Adresse; fehlt sie, warnt das AddOn (sonst hingen die Adressen am Host der Anfrage).
 2. **In REDAXO:** AddOns → Agentur Hub → Einstellungen → Überwachung: öffentlichen Schlüssel des Hubs (`ed25519:…`,
    im Hub unter Einstellungen → Agentur Hub) eintragen, „Signierte Status-Abfrage erlauben“ → Speichern. Für die
-   Anmeldung den Issuer eintragen (z. B. `https://hub.klxm.de/hub`) und speichern – noch ohne Einschalten.
+   Anmeldung den Issuer eintragen (z. B. `https://hub.example.org/hub`) und speichern – noch ohne Einschalten.
 3. **Im Hub:** Verwalten → Instanz registrieren → Adresse der Website → **„Adressen ermitteln“** (liest die
    Selbstauskunft) → „Adressen übernehmen“ → registrieren. Ohne Selbstauskunft die Adressen von Hand eintragen
    (System „REDAXO 6“ wählen – die Adressen sind dieselben):
