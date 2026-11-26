@@ -389,6 +389,33 @@ final class SelfTest
             Client::$baseOverride = null;
         }
 
+        // Verbinden per Einmal-Code: Code enthält Adresse, Endpunkt, Geheimnis; nur der Hash wird gespeichert; ohne gültigen Code 401
+        $before = HubAddon::addon()->getConfig('enroll', null);
+        Client::$baseOverride = 'https://www.example.org/';
+        Log::$memory = [];
+        try {
+            $code = Enroll::create('selftest');
+            $d = json_decode((string) Jwk::unb64u(substr($code, \strlen(Enroll::PREFIX))), true);
+            $saved = HubAddon::addon()->getConfig('enroll', []);
+            $this->check('Einmal-Code: Präfix, Adresse, Endpunkt', str_starts_with($code, Enroll::PREFIX) && 'https://www.example.org' === ($d['u'] ?? '')
+                && 'https://www.example.org/index.php?rex-api-call=klxm_hub_enroll' === ($d['e'] ?? ''));
+            $this->check('Einmal-Code: nur Hash gespeichert', \is_array($saved) && hash('sha256', (string) ($d['t'] ?? '')) === ($saved['hash'] ?? '') && !str_contains((string) json_encode($saved), (string) ($d['t'] ?? 'x')));
+            [$st, $body] = Enroll::handle(['token' => (string) $d['t'], 'step' => 'hello']);
+            $this->check('Einmal-Code: hello liefert Adressen', 200 === $st && 'redaxo5' === ($body['system'] ?? '') && str_contains((string) ($body['login']['redirect_uri'] ?? ''), 'klxm_hub&step=callback'));
+            [$st2] = Enroll::handle(['token' => 'falsch', 'step' => 'hello']);
+            $this->check('Einmal-Code: falscher Code → 401', 401 === $st2);
+            [$st3] = Enroll::handle(['token' => (string) $d['t'], 'step' => 'complete', 'issuer' => 'http://unsicher.example', 'client_id' => 'c', 'client_secret' => 's']);
+            $this->check('Einmal-Code: Issuer ohne https abgelehnt', 400 === $st3 && null !== Enroll::pending());
+        } finally {
+            if (null === $before) {
+                HubAddon::addon()->removeConfig('enroll');
+            } else {
+                HubAddon::addon()->setConfig('enroll', $before);
+            }
+            Client::$baseOverride = null;
+            Log::$memory = null;
+        }
+
         // Erweiterungspunkte als rex_extension_point mit festen Namen
         $ep = new ExtensionPoint\HubStatus(['a' => 1]);
         $ep->warning('x', 'editorial');

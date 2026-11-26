@@ -86,6 +86,12 @@ final class Client
     /** Für den Selbsttest: feste Basis statt Settings::baseUrl() */
     public static ?string $baseOverride = null;
 
+    /** Adresse der Website (mit Schrägstrich am Ende) – Selbsttest kann sie über $baseOverride setzen */
+    public static function siteUrl(): string
+    {
+        return self::$baseOverride ?? Settings::baseUrl();
+    }
+
     /**
      * Absolute Adresse im Backend: Basis der Website (System → URL der Website bzw. Host der Anfrage) + Ordner des Backends
      * (meist „redaxo“) + index.php mit Parametern – genau so wird sie beim Hub registriert.

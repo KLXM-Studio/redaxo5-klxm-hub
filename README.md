@@ -53,6 +53,17 @@ activate it under AddOns (or `php redaxo/bin/console package:install klxm_hub`).
 5. **In the hub:** “Check now” – the traffic light appears.
 6. **Keep an emergency admin:** at least one local admin with password (and passkey). The addon warns if there is none.
 
+### Connect with a one-time code (recommended)
+
+Quickest way: **AddOns → Agency Hub → Settings → “Connect to the agency hub” → Create one-time code**, copy it and paste it
+in the hub under **“Connect instance by code”**. The hub then sets up sign-in (issuer, client ID, client secret) and
+monitoring (public keys) – nobody has to copy addresses or keys.
+
+- The code is valid for 15 minutes and once; only its hash is stored. “Discard code” invalidates it immediately.
+- Endpoint: `POST index.php?rex-api-call=klxm_hub_enroll` (JSON), steps `hello` (addresses) and `complete` (apply the
+  settings; the issuer must be `https://` and reachable via discovery).
+- Failed attempts are limited per IP (10 in 15 minutes) and logged in the system log (`enroll-failed`).
+
 ### Self-description (`klxm-instance-v1`)
 
 `GET /.well-known/klxm-studio` – website name, redirect URI, initiate-login URI, post-logout URI, status address;

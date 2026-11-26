@@ -112,3 +112,16 @@ klxm_hub_check_https = Aufruf ohne HTTPS
 klxm_hub_check_dev_addons = AddOns als Entwicklungsfassung: {0}
 klxm_hub_check_opcache = OPcache ist aus
 klxm_hub_check_no_local_admin = Kein lokaler Admin mit Passwort (Notfall-Zugang)
+
+klxm_hub_section_enroll = Mit dem Agentur Hub verbinden
+klxm_hub_enroll_note = Erzeugen Sie einen Einmal-Code und fügen Sie ihn im Hub unter „Instanz per Code verbinden“ ein. Der Hub richtet damit die Anmeldung und die Überwachung ein – ohne dass jemand Adressen oder Schlüssel abtippt. Der Code gilt 15 Minuten und nur einmal.
+klxm_hub_enroll_code = Einmal-Code
+klxm_hub_enroll_code_note = Jetzt kopieren – der Code wird nur einmal angezeigt.
+klxm_hub_enroll_pending = Ein Code ist offen bis {0} Uhr.
+klxm_hub_enroll_done = Zuletzt verbunden mit {0} am {1}.
+klxm_hub_enroll_create = Einmal-Code erzeugen
+klxm_hub_enroll_new = Neuen Code erzeugen
+klxm_hub_enroll_cancel = Code verwerfen
+klxm_hub_enroll_created = Einmal-Code erzeugt – gültig für 15 Minuten.
+klxm_hub_enroll_cancelled = Code verworfen.
+klxm_hub_enroll_invalid = Der Code ist falsch, abgelaufen oder schon verwendet.

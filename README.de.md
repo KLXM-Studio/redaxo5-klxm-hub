@@ -58,6 +58,17 @@ AddOns → Agentur Hub → installieren und aktivieren (oder `php redaxo/bin/con
 
 Der Kasten „Adressen für den Hub“ in den Einstellungen zeigt alle Adressen dieser Installation.
 
+### Verbinden per Einmal-Code (empfohlen)
+
+Am schnellsten: **AddOns → Agentur Hub → Einstellungen → „Mit dem Agentur Hub verbinden“ → Einmal-Code erzeugen**, den Code
+kopieren und im Hub unter **„Instanz per Code verbinden“** einfügen. Der Hub richtet damit Anmeldung (Issuer, Client-ID,
+Client-Geheimnis) und Überwachung (öffentliche Schlüssel) ein – niemand tippt Adressen oder Schlüssel ab.
+
+- Der Code gilt 15 Minuten und nur einmal; gespeichert wird nur sein Hash. „Code verwerfen“ macht ihn sofort ungültig.
+- Endpunkt: `POST index.php?rex-api-call=klxm_hub_enroll` (JSON), Schritte `hello` (Adressen) und `complete`
+  (Einstellungen übernehmen; der Issuer muss `https://` sein und per Discovery erreichbar).
+- Fehlversuche sind je IP begrenzt (10 in 15 Minuten) und stehen im Systemprotokoll (`enroll-failed`).
+
 ### Selbstauskunft (`klxm-instance-v1`)
 
 `GET /.well-known/klxm-studio` – Name der Website, Redirect-URI, Einstieg, Adresse nach dem Abmelden, Status-Adresse;

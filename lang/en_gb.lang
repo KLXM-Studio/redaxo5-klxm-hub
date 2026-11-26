@@ -112,3 +112,16 @@ klxm_hub_check_https = Request without HTTPS
 klxm_hub_check_dev_addons = Addons as development versions: {0}
 klxm_hub_check_opcache = OPcache is off
 klxm_hub_check_no_local_admin = No local admin with password (emergency access)
+
+klxm_hub_section_enroll = Connect to the agency hub
+klxm_hub_enroll_note = Create a one-time code and paste it in the hub under “Connect instance by code”. The hub then sets up sign-in and monitoring – nobody has to copy addresses or keys. The code is valid for 15 minutes and can be used once.
+klxm_hub_enroll_code = One-time code
+klxm_hub_enroll_code_note = Copy it now – the code is shown only once.
+klxm_hub_enroll_pending = A code is open until {0}.
+klxm_hub_enroll_done = Last connected to {0} on {1}.
+klxm_hub_enroll_create = Create one-time code
+klxm_hub_enroll_new = Create new code
+klxm_hub_enroll_cancel = Discard code
+klxm_hub_enroll_created = One-time code created – valid for 15 minutes.
+klxm_hub_enroll_cancelled = Code discarded.
+klxm_hub_enroll_invalid = The code is wrong, expired or already used.

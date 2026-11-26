@@ -2,6 +2,7 @@
 
 namespace Klxm\Hub;
 
+use Klxm\Hub\Api\EnrollApi;
 use Klxm\Hub\Api\InstanceApi;
 use Klxm\Hub\Api\LoginApi;
 use Klxm\Hub\Api\StatusApi;
@@ -54,6 +55,7 @@ final class HubAddon
         rex_api_function::register('klxm_hub', LoginApi::class);
         rex_api_function::register('klxm_hub_status', StatusApi::class);
         rex_api_function::register('klxm_hub_instance', InstanceApi::class);
+        rex_api_function::register('klxm_hub_enroll', EnrollApi::class);
 
         // Zuordnung entfernen, wenn der Benutzer im Core gelöscht wird
         rex_extension::register('USER_DELETED', static function (rex_extension_point $ep): void {

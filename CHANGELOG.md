@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 – 2026-11-26
+
+- Verbinden per Einmal-Code (wie die Fassung für REDAXO 6, 0.3.0): Einstellungen → „Mit dem Agentur Hub verbinden“ erzeugt
+  einen Code (15 Minuten, einmal, nur der Hash gespeichert). Im Hub unter „Instanz per Code verbinden“ eingefügt, richtet der
+  Hub Anmeldung und Überwachung ein (`POST index.php?rex-api-call=klxm_hub_enroll`, Schritte `hello`/`complete`, Issuer nur
+  `https://` und per Discovery geprüft, Logo des Anbieters wird übernommen). Fehlversuche je IP begrenzt (`enroll-failed`).
+- Selbsttest um den Einmal-Code erweitert.
+
 ## 0.1.0 – 2026-11-21
 
 Erste Fassung für REDAXO 5 (ab 5.17, PHP ab 8.3), gleicher Funktionsumfang wie die Fassung für REDAXO 6 in

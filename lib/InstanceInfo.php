@@ -39,7 +39,7 @@ final class InstanceInfo
         return [
             'spec' => self::SPEC,
             'system' => Status::SYSTEM,
-            'name' => mb_substr(trim(strip_tags((string) rex::getServerName())), 0, 120) ?: parse_url($base, PHP_URL_HOST),
+            'name' => self::name(),
             'login' => [
                 'redirect_uri' => Client::redirectUri(),
                 'initiate_login_uri' => Client::startUri(),
@@ -48,6 +48,12 @@ final class InstanceInfo
             ],
             'monitoring' => ['status_url' => $statusUrl, 'sites' => $statusUrl ? [['key' => 'default', 'url' => $base, 'status_url' => $statusUrl]] : []],
         ];
+    }
+
+    /** Name der Website (Servername, sonst Host der Adresse) */
+    public static function name(): string
+    {
+        return mb_substr(trim(strip_tags((string) rex::getServerName())), 0, 120) ?: (string) parse_url(Settings::baseUrl(), PHP_URL_HOST);
     }
 
     /** Frontend: /.well-known/klxm-studio beantworten (aus boot.php, bevor andere AddOns die Adresse auflösen) */

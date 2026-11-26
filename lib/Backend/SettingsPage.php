@@ -2,6 +2,7 @@
 
 namespace Klxm\Hub\Backend;
 
+use Klxm\Hub\Enroll;
 use Klxm\Hub\HubAddon;
 use Klxm\Hub\Log;
 use Klxm\Hub\Logo;
@@ -23,6 +24,9 @@ use rex_view;
 final class SettingsPage
 {
     private const string CSRF = 'klxm_hub_settings';
+
+    /** Eben erzeugter Code (nur in dieser Antwort sichtbar) */
+    private static ?string $code = null;
 
     public static function run(): string
     {
@@ -51,6 +55,18 @@ final class SettingsPage
 
             return $f->parse('core/page/section.php');
         };
+
+        // ---------------------------------------------------------------- Mit dem Hub verbinden (Einmal-Code)
+        $pend = Enroll::pending();
+        $done = Enroll::done();
+        $open = null !== $pend || null !== self::$code;
+        $body = '<p>' . rex_escape($t('enroll_note')) . '</p>'
+            . (null !== $done ? '<p class="help-block">' . rex_escape($t('enroll_done', $done['issuer'], date('d.m.Y H:i', $done['at']))) . '</p>' : '')
+            . (null !== self::$code ? $field($t('enroll_code'), '<textarea class="form-control klxm-hub-keys" id="kh-code" rows="3" readonly spellcheck="false">' . rex_escape(self::$code) . '</textarea>', rex_escape($t('enroll_code_note')), 'kh-code')
+                : (null !== $pend ? '<p class="help-block">' . rex_escape($t('enroll_pending', date('H:i', $pend['expires']))) . '</p>' : ''));
+        $buttons = '<button type="submit" class="btn btn-primary" name="klxm_hub_do" value="enroll">' . rex_escape($open ? $t('enroll_new') : $t('enroll_create')) . '</button>'
+            . ($open ? ' <button type="submit" class="btn btn-default" name="klxm_hub_cancel" value="1">' . rex_escape($t('enroll_cancel')) . '</button>' : '');
+        $out .= '<form method="post" class="klxm-hub-form" data-klxm-hub="enroll">' . $csrf . $section($t('section_enroll'), $body, $buttons) . '</form>';
 
         // ---------------------------------------------------------------- Anmeldung
         $roles = '<option value="0">' . rex_escape($t('role_none')) . '</option>';
@@ -114,6 +130,14 @@ final class SettingsPage
     private static function action(): string
     {
         $do = rex_post('klxm_hub_do', 'string', '');
+        if ('' === $do && '' !== rex_post('klxm_hub_cancel', 'string', '')) {
+            if (!rex_csrf_token::factory(self::CSRF)->isValid()) {
+                return rex_view::error(rex_escape(HubAddon::t('csrf')));
+            }
+            Enroll::cancel();
+
+            return rex_view::success(rex_escape(HubAddon::t('enroll_cancelled')));
+        }
         if ('' === $do && '' !== rex_post('klxm_hub_forget', 'string', '')) {
             $do = 'oidc';
         }
@@ -124,6 +148,12 @@ final class SettingsPage
             return rex_view::error(rex_escape(HubAddon::t('csrf')));
         }
         $user = rex::requireUser()->getLogin();
+        if ('enroll' === $do) {
+            self::$code = Enroll::create($user);
+            Log::write('info', 'enroll-code', ['by' => $user]);
+
+            return rex_view::success(rex_escape(HubAddon::t('enroll_created')));
+        }
         if ('monitor' === $do) {
             $in = rex_post('monitor', 'array', []);
             $err = Settings::saveMonitor(!empty($in['enabled']), (string) ($in['keys'] ?? ''), (string) ($in['backup_dir'] ?? ''));
